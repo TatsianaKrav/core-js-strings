@@ -452,8 +452,8 @@ function extractNameFromTemplate(value) {
  *   unbracketTag('<span>') => 'span'
  *   unbracketTag('<a>') => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return str.substring(1, str.length - 1);
 }
 
 /**
@@ -471,8 +471,8 @@ function unbracketTag(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -491,8 +491,28 @@ function extractEmails(/* str */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let string = '';
+  const regEx = /[a-zA-Z]/;
+  for (let i = 0; i < str.length; i += 1) {
+    if (!str[i].match(regEx)) {
+      string += str[i];
+    } else {
+      const charCode = str.charCodeAt(i);
+      if (
+        (charCode >= 65 && charCode <= 77) ||
+        (charCode >= 97 && charCode <= 109)
+      ) {
+        string += String.fromCharCode(charCode + 13);
+      } else if (
+        (charCode >= 78 && charCode <= 90) ||
+        (charCode >= 110 && charCode <= 122)
+      ) {
+        string += String.fromCharCode(charCode - 13);
+      }
+    }
+  }
+  return string;
 }
 
 /**
@@ -519,8 +539,62 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const arr = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+  return arr.findIndex((card) => card === value);
 }
 
 module.exports = {
